@@ -1,12 +1,15 @@
 {
   "scripts": {
-    "start": "snowpack dev",
+    "start": "snowpack dev --reload",
     "build": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "prettier --check \"src/**/*.js\""
   },
   "dependencies": {
+    "@material/mwc-button": "^0.18.0",
+    "@material/mwc-textarea": "^0.18.0",
+    "@material/mwc-textfield": "^0.18.0",
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1"
   },

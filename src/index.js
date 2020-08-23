@@ -1,1 +1,1 @@
-import './app-root';
+import './me-contact';

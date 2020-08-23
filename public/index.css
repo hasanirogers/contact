@@ -1,6 +1,22 @@
+html {
+  --white: #f8f8f8;
+  --primary-color: #05161f;
+  --secondary-color: #e5c116;
+  --tertiary-color: #101010;
+  --text-color: var(--white);
+  --link-color: #1d76c4;
+
+  --mdc-theme-primary: var(--primary-color);
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  color: white;
-  margin: 0;
-  padding: 0;
+    font: 16px 'Ubuntu', sans-serif;
+    text-align: center;
+    color: var(--text-color);
+    background: var(--primary-color);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
 }
