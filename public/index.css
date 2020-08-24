@@ -5,8 +5,11 @@ html {
   --tertiary-color: #101010;
   --text-color: var(--white);
   --link-color: #1d76c4;
+  --error-color: red;
+  --success-color: #007e00;
 
   --mdc-theme-primary: var(--primary-color);
+  --mdc-theme-error: var(--error-color);
 }
 
 body {

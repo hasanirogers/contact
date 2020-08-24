@@ -17,8 +17,35 @@ import '@material/mwc-button';
 export class MeContact extends LitElement {
   static get properties() {
     return {
-
+      isValid: {
+        type: Boolean
+      },
+      isloading: {
+        type: Boolean,
+        reflect: true
+      },
+      haserror: {
+        type: Boolean,
+        reflect: true
+      },
+      success: {
+        type: Boolean,
+        reflect: true
+      },
+      validationMessage: {
+        type: String
+      }
     }
+  }
+
+  constructor() {
+    super();
+
+    this.isValid = false;
+    this.isloading = false;
+    this.haserror = false;
+    this.success = false;
+    this.validationMessage = 'All fields except your phone number is requied.';
   }
 
   static styles = [
@@ -99,14 +126,24 @@ export class MeContact extends LitElement {
         margin-bottom: 1rem;
       }
 
+      me-loader {
+        opacity: 0;
+        transition: opacity 300ms ease;
+      }
+
+      :host([isloading]) me-loader {
+        opacity: 1;
+      }
+
       button {
+        cursor: pointer;
         color: var(--white);
         font-size: 1.5rem;
         font-weight: bold;
         width: calc(100% - 4rem);
         max-width: 1024px;
         padding: 2rem;
-        margin: 2rem;
+        margin: 1rem 2rem;
         border: none;
         border-radius: 1rem;
         box-sizing: border-box;
@@ -117,6 +154,16 @@ export class MeContact extends LitElement {
 
       button:hover {
         background: var(--link-color);
+      }
+
+      :host([haserror]) button,
+      :host([haserror]) button:hover {
+        background: var(--error-color);
+      }
+
+      :host([success]) button,
+      :host([success]) button:hover {
+        background: var(--success-color);
       }
 
       footer {
@@ -183,6 +230,15 @@ export class MeContact extends LitElement {
           transform: translateY(0) rotate(180deg);
         }
       }
+
+      .validation-message {
+        padding: 0 2rem;
+        line-height: 1.5;
+      }
+
+      :host([haserror]) .validation-message {
+        color: var(--error-color);
+      }
     `
   ];
 
@@ -202,9 +258,10 @@ export class MeContact extends LitElement {
           <div>
             <div>
               <mwc-textfield
+                id="user"
+                name="user"
                 required
-                autoValidate
-                pattern="[ a-zA-z]"
+                pattern="[ a-zA-z]+"
                 label="Your Name" 
                 icon="account_box"
                 validationMessage="Please enter your name.">
@@ -212,9 +269,10 @@ export class MeContact extends LitElement {
             </div>
             <div>
               <mwc-textfield
+                id="phone"
+                name="phone"
                 type="tel"
-                autoValidate
-                pattern="[-.0-9]"
+                pattern="[-.0-9]+"
                 label="Your Phone" 
                 icon="phonelink_ring"
                 validationMessage="Enter a valid phone number.">
@@ -222,8 +280,10 @@ export class MeContact extends LitElement {
             </div>
             <div>
               <mwc-textfield
+                id="email"
+                name="email"
+                type="email"
                 required
-                autoValidate
                 label="Your Email" 
                 icon="email"
                 validationMessage="Enter a valid email address.">
@@ -231,9 +291,18 @@ export class MeContact extends LitElement {
             </div>
           </div>
           <div>
-            <mwc-textarea label="Message me maybe?" rows="8" icon="message"></mwc-textarea>
+            <mwc-textarea
+              id="message"
+              name="message" 
+              rows="8"
+              required 
+              icon="message"
+              label="Message me maybe?" >
+            </mwc-textarea>
           </div>
         </form>
+        <p class="validation-message">${this.validationMessage}</p>
+        <me-loader></me-loader>
         <button @click=${this.handleFormSubmit}>
           Send me your questions.
         </button>
@@ -271,7 +340,118 @@ export class MeContact extends LitElement {
   }
 
   handleFormSubmit() {
-    console.log(this);
+    this.validateForm();
+    if (this.isValid) this.makeRequest();
+  }
+
+  validateForm() {
+    const form = this.shadowRoot.querySelector('form');
+    const requiredFiels = this.shadowRoot.querySelectorAll('[required]');
+
+    requiredFiels.forEach(element => {
+      this.validateElement(element);
+    });
+
+    if(!this.isValid) {
+      this.haserror = true;
+      this.validationMessage = 'Whoops. Looks like there\'s a problem with the fields. Please fill them all out correctly.';
+    }
+  }
+
+  validateElement(element) {
+    const field = element.getAttribute('name');
+
+    if (typeof element.value != 'undefined') {
+      if (element.value.length > 2) {
+        // specific fields
+
+        // email field
+        if (field == 'email') {
+          if (element.value.indexOf('@') > 0) {
+            this.isValid = true;
+          }
+
+        // phone field
+        } else if (field == 'phone') {
+
+        // all others
+        } else {
+          this.isValid = true;
+        }
+
+      } else {
+        this.isValid = false;
+        this.haserror = true;
+      }
+    }
+  }
+
+  makeRequest() {
+    const form = this.shadowRoot.querySelector('form');
+    const submitBtn = this.shadowRoot.querySelector('button');
+    const url = window.location.href + form.getAttribute('action');
+
+    const formData = {
+      user: form.querySelector('#user').value,
+      phone: form.querySelector('#phone').value,
+      email: form.querySelector('#email').value,
+      message: form.querySelector('#message').value
+    };
+
+    const config = {
+      method: form.getAttribute('method'),
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    this.isloading = true;
+    submitBtn.setAttribute('disabled', true);
+    submitBtn.setAttribute('aria-disabled', true);
+
+    fetch(url, config)
+      .then(response => response.text())
+      .then(text => {
+        try {
+          const response = JSON.parse(text);
+
+          if (response.code == 200) {
+            this.contactSuccess()
+          } else {
+            this.contactError(form);
+            console.log('We reached the server but an weren\'t successful in sending mail.', response);
+          }
+        } catch (error) {
+          this.contactError(form);
+          console.log('The data sent back from the server was not JSON. Likely a 404 happened.', error);
+        }
+      })
+      .catch(error => {
+        this.contactError(form);
+        console.error('We hit some kind of network problem.', error);
+      });
+  }
+
+  contactSuccess() {
+    this.isloading = false;
+    this.haserror = false;
+    this.success = true;
+    this.validationMessage = 'Sweet. I got your message. I\'ll follow up soon.';
+  }
+
+  contactError() {
+    const submitBtn = this.shadowRoot.querySelector('button');
+
+    this.isloading = false;
+    this.haserror = true;
+
+    submitBtn.removeAttribute('disabled');
+    submitBtn.removeAttribute('aria-disabled');
+
+    this.validationMessage = 'Uh oh. I didn\'t get your email. Is your internet down? Did you enter a valid email? Try sending it again.';
+
+
   }
 }
 
