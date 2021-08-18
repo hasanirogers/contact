@@ -8,10 +8,12 @@
     "start": "snowpack dev --reload",
     "start:express": "snowpack build && node bin/www",
     "start:production": "snowpack build && forever start bin/www",
+    "restart:production": "forever restart bin/www",
     "build": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
-    "lint": "prettier --check \"src/**/*.js\""
+    "lint": "prettier --check \"src/**/*.js\"",
+    "deploy": "node deploy.js"
   },
   "dependencies": {
     "@material/mwc-button": "^0.18.0",
@@ -23,7 +25,8 @@
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "lit-element": "^2.3.1",
-    "lit-html": "^1.2.1"
+    "lit-html": "^1.2.1",
+    "ssh2-sftp-client": "^7.0.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
