@@ -4,12 +4,31 @@ const sendGrid = require('@sendgrid/mail');
 
 /* POST Email */
 router.post('/contact', (request, response) => {
+  const textContent = `
+    ${request.body.user} wrote the following: \n
+    ${request.body.message} \n
+    ----------------------------------------- \n
+    Email: ${request.body.email} \n
+    Phone: ${request.body.phone} \n
+  ` ;
+
+  const htmlContent = `
+    <h3>${request.body.user} wrote the following:</h3>
+    <hr />
+    <article>
+      ${request.body.message}
+    </article>
+    <hr />
+    <div>Email: ${request.body.email}</div>
+    <div>Phone: ${request.body.phone}</div>
+  `; 
+
   const message = {
     to: 'hasani.rogers@gmail.com',
     from: request.body.email,
     subject: request.body.user + ' wants your professional attention!',
-    text: request.body.message,
-    html: request.body.message,
+    text: textContent,
+    html: htmlContent,
   };
 
   response.setHeader('Content-Type', 'text/plain'); // node requires text/plain
