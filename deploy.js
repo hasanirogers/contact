@@ -21,7 +21,7 @@ const main = async () => {
 
   try {
     await client.connect(config);
-    await client.rmdir(remoteDir, true);
+    // await client.rmdir(remoteDir, true);
 
     client.on('upload', (info) => {
       console.log(`Listener: Uploaded ${info.source}`);
