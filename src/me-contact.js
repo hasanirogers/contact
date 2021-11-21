@@ -1,17 +1,19 @@
 import { LitElement, html, css } from 'lit-element';
-import { 
-  svgArrow, 
-  svgGitHub, 
-  svgCodeHub, 
-  svgNPM, 
-  svgLinkedIn, 
-  svgStackBlitz, 
-  svgTwitter 
+import {
+  svgArrow,
+  svgGitHub,
+  svgCodeHub,
+  svgNPM,
+  svgLinkedIn,
+  svgStackBlitz,
+  svgTwitter
 } from './svg';
 
 import '@material/mwc-textarea';
 import '@material/mwc-textfield';
 import '@material/mwc-button';
+
+import './me-nav';
 
 
 export class MeContact extends LitElement {
@@ -111,6 +113,8 @@ export class MeContact extends LitElement {
       }
 
       header span {
+        font-size: 1.25rem;
+        line-height: 1.5;
         opacity: 0.7;
         margin: 1rem auto;
         display: inline-block;
@@ -244,10 +248,11 @@ export class MeContact extends LitElement {
 
   render() {
     return html`
+      <me-nav></me-nav>
       <main>
         <header>
           <img src="/images/avatar.jpeg" />
-          <span>get in contact with...</span>
+          <span>I am currently accepting freelance jobs building WordPress sites for clients. If you're interested in having your site built or rebuilt then shoot me a message!</span>
           <h1>
             Hasani Rogers
             <aside>Front End Developer</aside>
@@ -262,7 +267,7 @@ export class MeContact extends LitElement {
                 name="user"
                 required
                 pattern="[ a-zA-z]+"
-                label="Your Name" 
+                label="Your Name"
                 icon="account_box"
                 validationMessage="Please enter your name.">
               </mwc-textfield>
@@ -273,7 +278,7 @@ export class MeContact extends LitElement {
                 name="phone"
                 type="tel"
                 pattern="[-.0-9]+"
-                label="Your Phone" 
+                label="Your Phone"
                 icon="phonelink_ring"
                 validationMessage="Enter a valid phone number.">
               </mwc-textfield>
@@ -284,7 +289,7 @@ export class MeContact extends LitElement {
                 name="email"
                 type="email"
                 required
-                label="Your Email" 
+                label="Your Email"
                 icon="email"
                 validationMessage="Enter a valid email address.">
               </mwc-textfield>
@@ -293,11 +298,11 @@ export class MeContact extends LitElement {
           <div>
             <mwc-textarea
               id="message"
-              name="message" 
+              name="message"
               rows="8"
-              required 
+              required
               icon="message"
-              label="Message me maybe?" >
+              label="How can I help you?" >
             </mwc-textarea>
           </div>
         </form>
@@ -456,4 +461,3 @@ export class MeContact extends LitElement {
 }
 
 window.customElements.define('me-contact', MeContact);
-

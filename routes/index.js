@@ -47,7 +47,7 @@ router.post('/contact', (request, response) => {
         .status(200)
         .json(responseData);
 
-      response.end(JSON.stringify(request.body, null, 2));
+      // response.end(JSON.stringify(request.body, null, 2));
     })
     .catch(error => {
       // there was problem with sending the mail

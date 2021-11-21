@@ -8,6 +8,8 @@ html {
   --error-color: red;
   --success-color: #007e00;
 
+  overflow: auto;
+
   --mdc-theme-primary: var(--primary-color);
   --mdc-theme-error: var(--error-color);
 }
@@ -15,6 +17,7 @@ html {
 body {
     font: 16px 'Ubuntu', sans-serif;
     text-align: center;
+    margin: 0;
     color: var(--text-color);
     background: var(--primary-color);
 }
