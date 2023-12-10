@@ -24,7 +24,7 @@ router.post('/contact', (request, response) => {
   `;
 
   const message = {
-    to: 'dev@hasanirogers.me, deificarts@gmail.com',
+    to: ['dev@hasanirogers.me', 'deificarts@gmail.com'],
     from: request.body.email,
     subject: request.body.user + ' sent a message!',
     text: textContent,
