@@ -101,8 +101,7 @@ export class MeNav extends LitElement {
           <li><a href="http://hasanirogers.me">Home</a></li>
           <li><a href="http://hasanirogers.me/education">Education</a></li>
           <li><a href="http://hasanirogers.me/history">Work History</a></li>
-          <li><a href="http://hasanirogers.me/skills">Skills</a></li>
-          <li><a href="http://hasanirogers.me/websites">Websites</a></li>
+          <li><a href="http://hasanirogers.me/projects">Projects</a></li>
           <li><a href="http://hasanirogers.me/accomplishments">Accomplishments</a></li>
           <li><a href="http://blog.hasanirogers.me">My Blog</a></li>
         </ul>

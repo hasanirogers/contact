@@ -252,7 +252,6 @@ export class MeContact extends LitElement {
       <main>
         <header>
           <img src="/images/avatar.jpeg" />
-          <span>I am currently accepting freelance jobs building WordPress sites for clients. If you're interested in having your site built or rebuilt then shoot me a message!</span>
           <h1>
             Hasani Rogers
             <aside>Front End Developer</aside>

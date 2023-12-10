@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "description": "Contact me, Hasani Rogers.",
-  "author": "Hasani Rogers <hasani.rogers@gmail.com>",
+  "author": "Hasani Rogers <dev@hasanirogers.me>",
   "scripts": {
     "start": "snowpack dev --reload",
     "start:express": "snowpack build && node bin/www",

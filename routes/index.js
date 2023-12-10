@@ -21,12 +21,12 @@ router.post('/contact', (request, response) => {
     <hr />
     <div>Email: ${request.body.email}</div>
     <div>Phone: ${request.body.phone}</div>
-  `; 
+  `;
 
   const message = {
-    to: 'hasani.rogers@gmail.com',
+    to: 'dev@hasanirogers.me, deificarts@gmail.com',
     from: request.body.email,
-    subject: request.body.user + ' wants your professional attention!',
+    subject: request.body.user + ' sent a message!',
     text: textContent,
     html: htmlContent,
   };
