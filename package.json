@@ -8,6 +8,7 @@
     "start": "snowpack dev --reload",
     "start:express": "snowpack build && node bin/www",
     "start:production": "snowpack build && forever start bin/www",
+    "stop:production": "forever stop bin/www",
     "restart:production": "forever restart bin/www",
     "build": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",

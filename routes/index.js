@@ -35,7 +35,7 @@ router.post('/contact', (request, response) => {
   sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
   sendGrid
-    .send(message)
+    .sendMultiple(message)
     .then(() => {
       // we're good send the data
       const responseData = {
